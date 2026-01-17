@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 import userRouter from './router/userRouter.js'
 import productRouter from './router/productRouter.js'
 import Autherization from './lib/jwtMiddleware.js'
@@ -18,15 +19,17 @@ mongoose.connect(mongoURI).then(
 
 const app = express()
 
+app.use(cors())
+
 app.use(express.json())     // Middleware to parse JSON bodies
 
 //middlewhere for autherization
 app.use(Autherization)
 
-app.use('/users', userRouter)
-app.use('/product', productRouter)
+app.use('/api/users', userRouter)
+app.use('/api/product', productRouter)
 
-app.listen(5000, 
+app.listen(5001, 
     ()=> {
         console.log("Server started")
     }
